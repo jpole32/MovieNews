@@ -24,13 +24,36 @@ class MovieItemsRecyclerViewAdapter(
 
         inner class MovieViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
             var mItem: MovieItem? = null
-            val mTitle: TextView = mView.findViewById<View>() as TextView
-            val mMovieDescription: TextView = mView.findViewById<View>() as TextView
-            val mMovieImage: ImageView = mView.findViewById<View>() as ImageView
+            val mTitle: TextView = mView.findViewById<View>(R.id.movie_title) as TextView
+            val mMovieDescription: TextView = mView.findViewById<View>(R.id.movie_description) as TextView
+            val mMovieImage: ImageView = mView.findViewById<View>(R.id.movie_image) as ImageView
 
             override fun toString(): String {
                 return mTitle.toString() + " '" + mMovieDescription.text + "'"
             }
+        }
+
+        override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+            val movie = movies[position]
+
+            holder.mItem = movie
+            holder.mTitle.text = movie.title
+            holder.mMovieDescription.text = movie.desc
+
+            Glide.with(holder.mView)
+                .load(movie.poster)
+                .centerInside()
+                .into(holder.mMovieImage)
+
+            holder.mView.setOnClickListener {
+                holder.mItem?.let { movie ->
+                    mListener?.onItemClick(movie)
+                }
+            }
+        }
+
+        override fun getItemCount(): Int {
+            return movies.size
         }
 
 

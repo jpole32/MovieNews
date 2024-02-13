@@ -45,7 +45,7 @@ class MovieItemsFragment : Fragment(), OnListFragmentInteractionListener  {
         params["api-key"] = API_KEY
         // Using the client, perform the HTTP request
         client[
-            "https://api.themoviedb.org/3/movie/now_playing.json",
+            "https://api.themoviedb.org/3/movie/now_playing",
             params,
             object : JsonHttpResponseHandler()
 
@@ -98,6 +98,7 @@ class MovieItemsFragment : Fragment(), OnListFragmentInteractionListener  {
                     // If the error is not null, log it!
                     t?.message?.let {
                         Log.e("MovieItemsFragment", errorResponse)
+                        Log.e("MovieItemsFragment", "OOPS")
                     }
                 }
             }]
